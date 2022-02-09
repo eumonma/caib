@@ -8,7 +8,23 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: Builder(builder: (BuildContext context) {
+          return IconButton(
+            icon: const Icon(Icons.menu),
+            tooltip: 'Menú',
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          );
+        }),
         title: Text('Home'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+            onPressed: () => FirebaseAuth.instance.signOut(),
+          )
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(32),
