@@ -1,14 +1,21 @@
+import 'package:caib/models/lote.dart';
 import 'package:caib/page/home_page.dart';
 import 'package:caib/widget/login_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => Lote(),
+      child: MyApp()
+      )
+    );
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
