@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class Lote extends ChangeNotifier {
-  int loteSeleccionado = 3;
+  int loteSeleccionado = 1;
 
   void addBotonPulsado(int lote) {
     loteSeleccionado = lote;
