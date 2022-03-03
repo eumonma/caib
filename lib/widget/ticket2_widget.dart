@@ -131,7 +131,9 @@ class _ticket2WidgetState extends State<ticket2Widget> {
 
   Stream<List<Ticket>> readTickets() => FirebaseFirestore.instance
 //      .collection('Lote1')
-      .collection('Lote${loteSeleccionado}')
+//      .collection('Lote${loteSeleccionado}')
+      .collection('Tickets')
+      .where('lote', isEqualTo: loteSeleccionado)
       .snapshots()
       .map((snapshot) =>
           snapshot.docs.map((doc) => Ticket.fromJson(doc.data())).toList());

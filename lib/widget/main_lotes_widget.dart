@@ -1,4 +1,5 @@
 import 'package:caib/models/lote.dart';
+import 'package:caib/widget/create_ticket_widget.dart';
 import 'package:caib/widget/ticket2_widget.dart';
 import 'package:caib/widget/ticket_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -77,6 +78,7 @@ class mainLotesWidget extends StatelessWidget {
             ],
           ),
         ),
+        createTicketWidget(),
         ElevatedButton(
           child: Text('Insertar'),
           onPressed: () {
@@ -102,10 +104,13 @@ class mainLotesWidget extends StatelessWidget {
     print('CreateTicket');
 
     final docUser =
-        FirebaseFirestore.instance.collection('Lote${loteSeleccionado}').doc();
+//        FirebaseFirestore.instance.collection('Lote${loteSeleccionado}').doc();
+//        FirebaseFirestore.instance.collection('Tickets').doc('Lote${loteSeleccionado}').collection('Tickets').doc('DCC-11');
+        FirebaseFirestore.instance.collection('Tickets').doc();
 
     final json = {
       'id': docUser.id,
+      'lote': loteSeleccionado,
       'descTicket': 'Ejemplo de Ticket',
       'codTicket': 'DCC-50',
       'horasEstimadas': 21,

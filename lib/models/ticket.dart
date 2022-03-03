@@ -6,6 +6,7 @@ class Ticket {
   final int horasConsumidas;
   final String finalizadaSN;
   final String empresaAsignada;
+  final int lote;
 
   Ticket(
       {this.id = '',
@@ -14,7 +15,8 @@ class Ticket {
       required this.horasEstimadas,
       required this.horasConsumidas,
       required this.finalizadaSN,
-      required this.empresaAsignada});
+      required this.empresaAsignada,
+      required this.lote});
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -24,6 +26,7 @@ class Ticket {
         'horasConsumidas': horasConsumidas,
         'finalizadaSN': finalizadaSN,
         'empresaAsignada': empresaAsignada,
+        'lote': lote,
       };
 
   static Ticket fromJson(Map<String, dynamic> json) => Ticket(
@@ -34,5 +37,6 @@ class Ticket {
         horasConsumidas: json['horasConsumidas'],
         finalizadaSN: json['finalizadaSN'],
         empresaAsignada: json['empresaAsignada'],
+        lote: json['lote'],
       );
 }
