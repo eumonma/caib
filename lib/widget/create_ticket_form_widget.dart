@@ -22,6 +22,7 @@ class _createTicketFormWidgetState extends State<createTicketFormWidget> {
   late int horasEstimadas;
   late int horasConsumidas;
   late String finalizadaSN = 'N';
+  late String empresaAsignada;
 
   bool isChecked = false;
 
@@ -63,16 +64,28 @@ Future openDialogCreateTicket() => showDialog(
             child: ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                checkBox2(
-                  tareaRealizada: finalizadaSN,
+                Row(
+                  children: [
+                    Text('Tarea Finalizada:'),
+                    checkBox2(
+                      tareaRealizada: finalizadaSN,
+                      onChanged: (valor){
+                        finalizadaSN = valor;
+                        print("CheckBox: ${finalizadaSN}");
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 32),
+                dropDown2(
+                  itemsList: ["AT4", "Laberit"],
+                  defaultValue: "AT4",
+                  dropdownHint: "Seleccionea Empresa",
+//                  selectedValue: selectedValue,
                   onChanged: (valor){
-                    finalizadaSN = valor;
-                    print("CheckBox: ${finalizadaSN}");
-                  },
-                  ),
-//                checkBoxPrueba(
-//                  ticketFinalizado: finalizadaSN,
-//                  ),
+                    empresaAsignada = valor;
+                  }),
+                const SizedBox(height: 32),
                 formFieldCodTicket(),
                 const SizedBox(height: 32),
                 TextFormField(
@@ -239,3 +252,59 @@ class _checkBox2State extends State<checkBox2> {
   }
 }
 
+
+
+class dropDown2 extends StatefulWidget {
+  final ValueChanged<String> onChanged;
+  String defaultValue;
+//  String selectedValue;
+  String dropdownHint;
+  List<String> itemsList;
+
+  dropDown2(
+    { Key? key,
+      required this.itemsList,
+      required this.defaultValue,
+      required this.dropdownHint,
+//      required this.selectedValue,
+      required this.onChanged}) : super(key: key);
+
+  @override
+  _dropDown2State createState() => _dropDown2State();
+}
+
+class _dropDown2State extends State<dropDown2> {
+  late String _value = widget.defaultValue;
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: DropdownButton<String>(
+        items: widget.itemsList.map(
+          (String value) {
+            return new DropdownMenuItem<String>(
+              value: value,
+              child: new Text(value),
+            );
+          },
+        ).toList(),
+        value: _value == null ? widget.defaultValue : _value,
+        isExpanded: true,
+        onChanged: (value) {
+          setState(() {
+            _value = value!;
+          });
+          widget.onChanged(_value);
+        },
+        hint: Text(widget.dropdownHint),
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.white,
+        ),
+        iconEnabledColor: Colors.blue,
+        iconSize: 20,
+        underline: Container(),
+      ),
+    );
+  }
+}
