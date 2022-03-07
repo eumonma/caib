@@ -1,4 +1,5 @@
 import 'package:caib/models/lote.dart';
+import 'package:caib/widget/create_ticket_form_widget.dart';
 import 'package:caib/widget/create_ticket_widget.dart';
 import 'package:caib/widget/ticket2_widget.dart';
 import 'package:caib/widget/ticket_widget.dart';
@@ -78,7 +79,8 @@ class mainLotesWidget extends StatelessWidget {
             ],
           ),
         ),
-        createTicketWidget(),
+        createTicketFormWidget(),
+//        createTicketWidget(),
         ElevatedButton(
           child: Text('Insertar'),
           onPressed: () {
@@ -121,5 +123,37 @@ class mainLotesWidget extends StatelessWidget {
 
     /// Create document and write data to Firebase
     await docUser.set(json);
+  }
+}
+
+
+class checkBoxPrueba extends StatefulWidget {
+  const checkBoxPrueba({ Key? key, required String ticketFinalizado }) : super(key: key);
+
+  @override
+  _checkBoxPruebaState createState() => _checkBoxPruebaState();
+}
+
+class _checkBoxPruebaState extends State<checkBoxPrueba> {
+
+  bool isChecked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 32,
+      child: Form(
+        child: ListView(
+          children: [Checkbox(
+                      value: isChecked,
+                      onChanged: (value) {
+                        setState(() => isChecked = value!);
+                        print(isChecked);
+                      }
+                    ),
+          ]
+        ),
+      ),
+    );
   }
 }
