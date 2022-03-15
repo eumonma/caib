@@ -66,7 +66,7 @@ class mainLotesWidget extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 600,
+                height: 300,
                 child: TabBarView(
                   children: [
                     ticket2Widget(),
@@ -126,16 +126,15 @@ class mainLotesWidget extends StatelessWidget {
   }
 }
 
-
 class checkBoxPrueba extends StatefulWidget {
-  const checkBoxPrueba({ Key? key, required String ticketFinalizado }) : super(key: key);
+  const checkBoxPrueba({Key? key, required String ticketFinalizado})
+      : super(key: key);
 
   @override
   _checkBoxPruebaState createState() => _checkBoxPruebaState();
 }
 
 class _checkBoxPruebaState extends State<checkBoxPrueba> {
-
   bool isChecked = false;
 
   @override
@@ -143,16 +142,14 @@ class _checkBoxPruebaState extends State<checkBoxPrueba> {
     return Container(
       height: 32,
       child: Form(
-        child: ListView(
-          children: [Checkbox(
-                      value: isChecked,
-                      onChanged: (value) {
-                        setState(() => isChecked = value!);
-                        print(isChecked);
-                      }
-                    ),
-          ]
-        ),
+        child: ListView(children: [
+          Checkbox(
+              value: isChecked,
+              onChanged: (value) {
+                setState(() => isChecked = value!);
+                print(isChecked);
+              }),
+        ]),
       ),
     );
   }
