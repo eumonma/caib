@@ -12,7 +12,6 @@ class ticket2Widget extends StatefulWidget {
 }
 
 class _ticket2WidgetState extends State<ticket2Widget> {
-
   final controllerCodTicket = TextEditingController();
   int loteSeleccionado = 0;
 
@@ -24,14 +23,13 @@ class _ticket2WidgetState extends State<ticket2Widget> {
   }
 */
   @override
-  Widget build(BuildContext context) => Consumer<Lote>(
-      builder: (context, lotes, child) {
-          loteSeleccionado = lotes.getBotonPulsado();
-          return Container(
-            child: buildUsers(),
-          );
-      }
-    );
+  Widget build(BuildContext context) =>
+      Consumer<Lote>(builder: (context, lotes, child) {
+        loteSeleccionado = lotes.getBotonPulsado();
+        return Container(
+          child: buildUsers(),
+        );
+      });
 
   Widget buildUsers() => StreamBuilder<List<Ticket>>(
       stream: readTickets(),
@@ -56,82 +54,82 @@ class _ticket2WidgetState extends State<ticket2Widget> {
       );
 
   Widget buildUser2(Ticket ticket) => Container(
-    color: Colors.grey.shade800,
-    margin: const EdgeInsets.all(4.0),
-    //padding: const EdgeInsets.all(8.0),
-    child: Row(
-      children: [
-        IconButton(
-          icon: const Icon(Icons.edit,),
-          onPressed: (){
-            openDialog(ticket);
-          },
+        color: Colors.grey.shade800,
+        margin: const EdgeInsets.all(4.0),
+        //padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            IconButton(
+              icon: const Icon(
+                Icons.edit,
+              ),
+              onPressed: () {
+                openDialog(ticket);
+              },
+            ),
+            CircleAvatar(child: Text(ticket.codTicket)),
+            Text(ticket.descTicket),
+            Text(ticket.horasEstimadas.toString()),
+            Text(ticket.horasConsumidas.toString()),
+            celda('Descripción', ticket.descTicket),
+          ],
         ),
-        CircleAvatar(child: Text(ticket.codTicket)),
-        Text(ticket.descTicket),
-        Text(ticket.horasEstimadas.toString()),
-        Text(ticket.horasConsumidas.toString()),
-        celda('Descripción', ticket.descTicket),
-      ],
-      ),
-  );
+      );
 
   Future openDialog(Ticket ticket) => showDialog(
-    context: context,
-    builder: (context) { 
-      controllerCodTicket.text = ticket.codTicket;
-      return AlertDialog(
-      title: Text('Modificar Ticket ${ticket.id}'),
-      content: TextField(
+      context: context,
+      builder: (context) {
+        controllerCodTicket.text = ticket.codTicket;
+        return AlertDialog(
+          title: Text('Modificar Ticket ${ticket.id}'),
+          content: TextField(
 //        initialValue: ticket.codTicket,
-        controller: controllerCodTicket,
-        autofocus: true,
-        decoration: InputDecoration(
-          labelText: 'Cualquier cosa',
-        ),
-      ),
-      actions: [
-        TextButton(
-          child: Text('Cancelar'),
-          onPressed: (){
-            print('Valor cambiado: ${controllerCodTicket.text}');
-            cancelar();
-          },
-        )
-      ],
-    );
-    }
-  );
+            controller: controllerCodTicket,
+            autofocus: true,
+            decoration: InputDecoration(
+              labelText: 'Cualquier cosa',
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () {
+                print('Valor cambiado: ${controllerCodTicket.text}');
+                cancelar();
+              },
+            )
+          ],
+        );
+      });
 
-  void cancelar(){
+  void cancelar() {
     Navigator.of(context).pop();
   }
 
   Widget celda(String etiqueta, String dato) => Container(
-    width: 100,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          child: Text(etiqueta,
-            style: TextStyle(
-              fontSize: 12,
-              color: Color.fromARGB(255, 0, 150, 136)),
-          ),
-          alignment: Alignment.topLeft,
+        width: 100,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              child: Text(
+                etiqueta,
+                style: TextStyle(
+                    fontSize: 12, color: Color.fromARGB(255, 0, 150, 136)),
+              ),
+              alignment: Alignment.topLeft,
+            ),
+            Text(
+              dato,
+              textAlign: TextAlign.start,
+              //style: TextStyle(color: Color.fromARGB(199, 245, 83, 83)),
+            ),
+          ],
         ),
-        Text(dato,
-          textAlign: TextAlign.start,
-          //style: TextStyle(color: Color.fromARGB(199, 245, 83, 83)),
-        ),
-      ],
-    ),
-  );
+      );
 
   Stream<List<Ticket>> readTickets() => FirebaseFirestore.instance
-//      .collection('Lote1')
-//      .collection('Lote${loteSeleccionado}')
       .collection('Tickets')
       .where('lote', isEqualTo: loteSeleccionado)
       .snapshots()
